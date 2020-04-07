@@ -1,0 +1,44 @@
+Group Anagrams
+Solution
+Given an array of strings, group anagrams together.
+
+Example:
+
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+Output:
+[
+  ["ate","eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]
+Note:
+
+All inputs will be in lowercase.
+The order of your output does not matter.
+
+Answer:-
+
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> results=new ArrayList<>();
+        
+        HashMap<String, List<String>> sortedStringToStringMap=new HashMap<>();
+        for(String str:strs){
+            String sortedString = getSortedString(str);
+            List<String> result=sortedStringToStringMap.getOrDefault(sortedString,new ArrayList<>());
+            result.add(str);
+            sortedStringToStringMap.put(sortedString,result);
+        }
+        for(Map.Entry<String,List<String>> entry: sortedStringToStringMap.entrySet()){
+            results.add(entry.getValue());
+        }
+        return results;
+    }
+    
+    private String getSortedString(String str){
+        char[] charArr=str.toCharArray();
+        Arrays.sort(charArr);
+        
+        return new String(charArr);
+    }
+}
